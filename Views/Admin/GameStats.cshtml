@@ -1,0 +1,13 @@
+﻿@model Game
+<h2>@Model.Name – Statistics</h2>
+<p>Total game sessions: @ViewBag.TotalSessions</p>
+<p>Current players online: @ViewBag.CurrentPlayers</p>
+
+<h3>Active users per day (last 7 days)</h3>
+<table>
+    <tr><th>Date</th><th>Distinct users</th></tr>
+    @foreach (var item in ViewBag.DailyUsers)
+    {
+        <tr><td>@item.Date</td><td>@item.Users</td></tr>
+    }
+</table>

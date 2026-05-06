@@ -1,0 +1,14 @@
+﻿@model List<Game>
+<h2>Games</h2>
+<table>
+    <tr><th>ID</th><th>Name</th><th>Achievements</th><th></th></tr>
+    @foreach (var g in Model)
+    {
+        <tr>
+            <td>@g.Id</td>
+            <td>@g.Name</td>
+            <td>@g.Achievements.Count</td>
+            <td><a href="/Admin/GameStats/@g.Id">Stats</a></td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,9 @@
+﻿@model List<User>
+<h2>Users (Supervisor view – no ban/actions detail)</h2>
+<table>
+    <tr><th>ID</th><th>Username</th><th>Role</th></tr>
+    @foreach (var u in Model)
+    {
+        <tr><td>@u.Id</td><td>@u.Username</td><td>@u.PermissionLevel</td></tr>
+    }
+</table>

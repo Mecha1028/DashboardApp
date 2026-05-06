@@ -1,0 +1,21 @@
+﻿@model User
+<h2>User: @Model.Username</h2>
+<p>Role: @Model.PermissionLevel</p>
+<p>Banned: @Model.Banned @if(Model.Banned){
+<span>(until @Model.BanEnd?.ToShortDateString())</span>
+}
+</p>
+
+<h3>Actions against this account</h3>
+<table>
+    <tr><th>Action</th><th>Description</th><th>By admin</th><th>Date</th></tr>
+    @foreach (var a in Model.UserActions)
+    {
+        <tr>
+            <td>@a.ActionType</td>
+            <td>@a.Description</td>
+            <td>@a.AdminId</td>
+            <td>@a.Timestamp</td>
+        </tr>
+    }
+</table>

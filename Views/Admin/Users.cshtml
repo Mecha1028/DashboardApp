@@ -1,0 +1,17 @@
+﻿@model List<User>
+<h2>All Users (Admin view – includes hidden info)</h2>
+<table>
+    <tr><th>ID</th><th>Username</th><th>Role</th><th>Banned</th><th>Ban End</th><th>Actions count</th><th></th></tr>
+    @foreach (var u in Model)
+    {
+        <tr>
+            <td>@u.Id</td>
+            <td>@u.Username</td>
+            <td>@u.PermissionLevel</td>
+            <td>@u.Banned</td>
+            <td>@u.BanEnd?.ToShortDateString()</td>
+            <td>@u.UserActions?.Count</td>
+            <td><a href="/Admin/UserDetail/@u.Id">Detail</a></td>
+        </tr>
+    }
+</table>
