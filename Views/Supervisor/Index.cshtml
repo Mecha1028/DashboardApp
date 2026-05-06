@@ -1,0 +1,15 @@
+﻿@model List<User>
+<h2>Supervisor - View Player Stats</h2>
+<table>
+    <tr><th>Player ID</th><th>Username</th><th></th></tr>
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>@p.Id</td>
+            <td>@p.Username</td>
+            <td><a href="/Supervisor/PlayerStats/@p.Id">View Stats</a></td>
+        </tr>
+    }
+</table>
+<p><a href="/Supervisor/Report">Submit a Ban Report</a></p>
+<p><a href="/Supervisor/GameStats?gameId=1">Game Stats Example</a></p>

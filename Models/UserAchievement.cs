@@ -9,7 +9,7 @@ namespace DashboardApp.Models
         public int AchievementId { get; set; }
         public DateTime EarnedAt { get; set; } = DateTime.Now;
 
-        public virtual User? User { get; set; }
-        public virtual Achievement? Achievement { get; set; }
+        public User? User { get; set; }
+        public Achievement? Achievement { get; set; }
     }
 }

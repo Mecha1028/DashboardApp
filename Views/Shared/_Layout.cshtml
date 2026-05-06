@@ -3,26 +3,47 @@
 <head>
     <title>Game Dashboard</title>
     <style>
-        body { font-family: sans-serif; margin: 1em; }
-        table { border-collapse: collapse; }
-        td, th { border: 1px solid #ccc; padding: 4px; }
-        .nav { margin-bottom: 1em; }
-        .nav a { margin-right: 10px; }
+        body {
+            font-family: sans-serif;
+            margin: 1em;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+
+        td, th {
+            border: 1px solid #ccc;
+            padding: 4px 8px;
+        }
+
+        a {
+            margin-right: 10px;
+        }
+
+        .nav {
+            margin-bottom: 1em;
+        }
     </style>
 </head>
 <body>
     <div class="nav">
-        <a href="/">Home</a>
-        @if (User.Identity.IsAuthenticated)
+        @if (User.Identity?.IsAuthenticated ?? false)
         {
-            @if (User.IsInRole("admin"))
+            <a href="/">Home</a>
+            @if (User.IsInRole("player") || User.IsInRole("supervisor") || User.IsInRole("admin"))
             {
-                <a href="/Admin/Users">Admin Users</a>
-                <a href="/Admin/Games">Admin Games</a>
+                <a href="/Player/MyStats">My Stats</a>
+                <a href="/Player/Games">Games & Leaderboards</a>
             }
             @if (User.IsInRole("supervisor") || User.IsInRole("admin"))
             {
-                <a href="/Supervisor/Users">Supervisor Users</a>
+                <a href="/Supervisor">Supervisor</a>
+            }
+            @if (User.IsInRole("admin"))
+            {
+                <a href="/Admin">Admin</a>
             }
             <span>Hello @User.Identity.Name</span>
             <a href="/Account/Logout">Logout</a>
@@ -35,5 +56,6 @@
     <div>
         @RenderBody()
     </div>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -1,0 +1,25 @@
+﻿@{
+    var players = ViewBag.Players as List<User>;
+    ViewData["Title"] = "Ban a Player";
+}
+<h2>Ban a Player</h2>
+<form method="post" action="/Admin/Ban">
+    <div>
+        <label>Player:</label>
+        <select name="userId">
+            @foreach (var p in players)
+            {
+                <option value="@p.Id">@p.Username</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label>Duration (days):</label>
+        <input type="number" name="days" value="7" min="1" />
+    </div>
+    <div>
+        <label>Reason:</label>
+        <input type="text" name="reason" required />
+    </div>
+    <button type="submit">Ban</button>
+</form>

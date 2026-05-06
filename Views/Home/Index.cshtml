@@ -1,9 +1,15 @@
-﻿<h2>Welcome</h2>
-@if (User.Identity.IsAuthenticated)
+﻿@{
+    ViewData["Title"] = "Home";
+}
+<h2>Welcome to the Game Dashboard</h2>
+@if (User.Identity?.IsAuthenticated ?? false)
 {
-    <p>You are logged in as @User.Identity.Name (role: @User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value).</p>
+    <p>
+        You are logged in as <strong>@User.Identity.Name</strong>
+        (role: @User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value).
+    </p>
 }
 else
 {
-    <p><a href="/Account/Login">Please log in</a>.</p>
+    <p>Please use the <strong>Login</strong> link above to access the dashboard.</p>
 }

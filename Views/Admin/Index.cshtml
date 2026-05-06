@@ -1,0 +1,36 @@
+﻿@{
+    var reports = ViewBag.Reports as List<Report>;
+    ViewData["Title"] = "Admin Dashboard";
+}
+<h2>Admin Dashboard</h2>
+
+<h3>Open Reports</h3>
+@if (reports.Count == 0)
+{
+    <p>No reports pending.</p>
+}
+else
+{
+    <table>
+        <tr><th>Reporter</th><th>Reported Player</th><th>Game</th><th>Reason</th><th></th></tr>
+        @foreach (var r in reports)
+        {
+            <tr>
+                <td>@r.Reporter?.Username</td>
+                <td>@r.ReportedUser?.Username</td>
+                <td>@r.Game?.Name</td>
+                <td>@r.Reason</td>
+                <td>
+                    <form method="post" action="/Admin/DismissReport">
+                        <input type="hidden" name="reportId" value="@r.Id" />
+                        <button>Dismiss</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+}
+<p>
+    <a href="/Admin/Ban">Ban a Player</a> |
+    <a href="/Admin/Bans">View Banned Players</a>
+</p>

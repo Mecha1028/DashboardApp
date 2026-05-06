@@ -9,6 +9,7 @@ namespace DashboardApp.Models
         public string Description { get; set; } = null!;
 
         public ICollection<Achievement> Achievements { get; set; } = new HashSet<Achievement>();
-        public ICollection<GameSession> GameSessions { get; set; } = new HashSet<GameSession>();
+        public ICollection<Highscore> Highscores { get; set; } = new HashSet<Highscore>();
+        public ICollection<Report> Reports { get; set; } = new HashSet<Report>();
     }
 }

@@ -1,17 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
-using DashboardApp.Data;
-using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DashboardApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly AppDbContext _context;
-        public HomeController(AppDbContext context) => _context = context;
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
-            // Simple view – you can redirect to admin area or show statistics for current user
+            if (User.Identity?.IsAuthenticated ?? false)
+            {
+                // redirect players to their own stats, others to their respective pages
+                if (User.IsInRole("admin"))
+                    return RedirectToAction("Index", "Admin");
+                if (User.IsInRole("supervisor"))
+                    return RedirectToAction("Index", "Supervisor");
+                return RedirectToAction("MyStats", "Player");
+            }
             return View();
         }
     }

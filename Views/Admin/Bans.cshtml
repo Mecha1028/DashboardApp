@@ -1,0 +1,33 @@
+﻿@model List<User>
+@{
+    var reasons = ViewBag.Reasons as List<UserAction>;
+    ViewData["Title"] = "Banned Players";
+}
+<h2>Currently Banned Players</h2>
+
+@if (Model.Count == 0)
+{
+    <p>No players are currently banned.</p>
+}
+else
+{
+    <table>
+        <tr><th>Username</th><th>Ban Until</th><th>Reason</th><th></th></tr>
+        @foreach (var u in Model)
+        {
+            var reason = reasons.FirstOrDefault(r => r.UserId == u.Id);
+            <tr>
+                <td>@u.Username</td>
+                <td>@u.BanEnd?.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@(reason?.Description ?? "No reason recorded")</td>
+                <td>
+                    <form method="post" action="/Admin/Unban" style="display:inline">
+                        <input type="hidden" name="userId" value="@u.Id" />
+                        <button type="submit">Unban</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+}
+<p><a href="/Admin/Index">Back to Dashboard</a></p>

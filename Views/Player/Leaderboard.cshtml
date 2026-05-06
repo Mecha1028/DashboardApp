@@ -1,0 +1,17 @@
+﻿@model List<Highscore>
+@{
+    var game = ViewBag.Game as Game;
+    ViewData["Title"] = $"{game.Name} Leaderboard";
+}
+<h2>@game.Name - Leaderboard</h2>
+<table>
+    <tr><th>Rank</th><th>Username</th><th>Score</th></tr>
+    @{
+        int rank = 1;
+    }
+    @foreach (var h in Model)
+    {
+        <tr><td>@rank</td><td>@h.User?.Username</td><td>@h.Score</td></tr>
+        rank++;
+    }
+</table>

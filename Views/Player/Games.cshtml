@@ -1,0 +1,6 @@
+﻿@model List<Game>
+<h2>Games</h2>
+@foreach (var g in Model)
+{
+    <p><a href="/Player/Leaderboard?gameId=@g.Id">@g.Name</a> - @g.Description</p>
+}

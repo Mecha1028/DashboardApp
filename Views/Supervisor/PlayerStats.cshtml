@@ -1,0 +1,22 @@
+﻿@model User
+@{
+    var highscores = ViewBag.Highscores as List<Highscore>;
+    var achievements = ViewBag.Achievements as List<UserAchievement>;
+}
+<h2>Stats for @Model.Username</h2>
+<h3>Highscores</h3>
+<table>
+    <tr><th>Game</th><th>Score</th></tr>
+    @foreach (var hs in highscores)
+    {
+        <tr><td>@hs.Game?.Name</td><td>@hs.Score</td></tr>
+    }
+</table>
+<h3>Achievements</h3>
+<table>
+    <tr><th>Game</th><th>Achievement</th></tr>
+    @foreach (var ua in achievements)
+    {
+        <tr><td>@ua.Achievement?.Game?.Name</td><td>@ua.Achievement?.Name</td></tr>
+    }
+</table>

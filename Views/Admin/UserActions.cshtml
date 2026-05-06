@@ -1,0 +1,19 @@
+﻿@model User
+@{
+    var actions = ViewBag.Actions as List<UserAction>;
+    ViewData["Title"] = $"Actions for {Model.Username}";
+}
+<h2>Hidden Actions for @Model.Username</h2>
+<table>
+    <tr><th>Action</th><th>Description</th><th>By Admin</th><th>Date</th></tr>
+    @foreach (var a in actions)
+    {
+        <tr>
+            <td>@a.ActionType</td>
+            <td>@a.Description</td>
+            <td>@a.Admin?.Username</td>
+            <td>@a.Timestamp.ToString("dd/MM/yyyy HH:mm")</td>
+        </tr>
+    }
+</table>
+<p><a href="/Admin/Index">Back to Dashboard</a></p>

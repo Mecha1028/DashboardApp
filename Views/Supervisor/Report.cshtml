@@ -1,0 +1,30 @@
+﻿@{
+    var players = ViewBag.Players as List<User>;
+    var games = ViewBag.Games as List<Game>;
+}
+<h2>Submit a Ban Report</h2>
+<form method="post">
+    <div>
+        <label>Player:</label>
+        <select name="reportedUserId">
+            @foreach (var p in players)
+            {
+                <option value="@p.Id">@p.Username</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label>Game:</label>
+        <select name="gameId">
+            @foreach (var g in games)
+            {
+                <option value="@g.Id">@g.Name</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label>Reason:</label>
+        <textarea name="reason" required></textarea>
+    </div>
+    <button type="submit">Send Report</button>
+</form>

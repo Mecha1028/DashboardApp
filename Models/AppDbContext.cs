@@ -1,7 +1,5 @@
-﻿using DashboardApp.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Reflection.Emit;
+﻿using Microsoft.EntityFrameworkCore;
+using DashboardApp.Models;
 
 namespace DashboardApp.Data
 {
@@ -9,12 +7,13 @@ namespace DashboardApp.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserAction> UserActions { get; set; }
-        public DbSet<Game> Games { get; set; }
-        public DbSet<Achievement> Achievements { get; set; }
-        public DbSet<UserAchievement> UserAchievements { get; set; }
-        public DbSet<GameSession> GameSessions { get; set; }
+        public DbSet<User> Users => Set<User>();
+        public DbSet<UserAction> UserActions => Set<UserAction>();
+        public DbSet<Game> Games => Set<Game>();
+        public DbSet<Achievement> Achievements => Set<Achievement>();
+        public DbSet<UserAchievement> UserAchievements => Set<UserAchievement>();
+        public DbSet<Highscore> Highscores => Set<Highscore>();
+        public DbSet<Report> Reports => Set<Report>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +22,22 @@ namespace DashboardApp.Data
                 .WithMany()
                 .HasForeignKey(a => a.AdminId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Report>()
+                .HasOne(r => r.Reporter)
+                .WithMany(u => u.SubmittedReports)
+                .HasForeignKey(r => r.ReporterId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Report>()
+                .HasOne(r => r.ReportedUser)
+                .WithMany()
+                .HasForeignKey(r => r.ReportedUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Highscore>()
+                .HasIndex(h => new { h.UserId, h.GameId })
+                .IsUnique();
         }
     }
 }

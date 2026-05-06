@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using DashboardApp.Data;
 using DashboardApp.Models;
 
@@ -19,10 +18,8 @@ namespace DashboardApp.Controllers
         private readonly AppDbContext _context;
         public AccountController(AppDbContext context) => _context = context;
 
-        // GET: /Account/Login
         public IActionResult Login() => View();
 
-        // POST: /Account/Login
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
@@ -51,12 +48,14 @@ namespace DashboardApp.Controllers
             return RedirectToAction("Login");
         }
 
-        private bool VerifyPassword(string password, string hash)
+        private static string HashPassword(string password)
         {
-            byte[] salt = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 };
-            string newHash = Convert.ToBase64String(
-                KeyDerivation.Pbkdf2(password, salt, KeyDerivationPrf.HMACSHA256, 10000, 256 / 8));
-            return newHash == hash;
+            byte[] bytes = System.Security.Cryptography.SHA256.HashData(
+                System.Text.Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(bytes);
         }
+
+        private bool VerifyPassword(string password, string hash)
+            => HashPassword(password) == hash;
     }
 }

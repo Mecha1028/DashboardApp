@@ -1,5 +1,4 @@
-﻿@model dynamic
-@{
+﻿@{
     ViewData["Title"] = "Login";
 }
 <h2>Login</h2>
@@ -15,4 +14,10 @@
     <button type="submit">Log in</button>
     <div style="color:red">@Html.ValidationSummary()</div>
 </form>
-<p>Demo accounts: admin / admin123, supervisor / super123, player1 / player123</p>
+
+<p style="margin-top:1em;">
+    <strong>Demo accounts:</strong><br />
+    admin / admin123<br />
+    supervisor / super123<br />
+    player1 / player123
+</p>
